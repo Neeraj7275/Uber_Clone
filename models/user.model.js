@@ -31,14 +31,14 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.methods.genrateToken = ()=>{
-    return jwt.sign({_id:this._id},process.env.tokensecret)
+    return jwt.sign({_id: this._id},process.env.tokensecret,{expiresIn:"24h"})
 }
 
-userSchema.methods.comparePassword = async ()=>{
-    return await bcrypt.compare(password,this.password)
+userSchema.methods.comparePassword = async (password)=>{
+    return await bcrypt.compare(password, this.password)
 }
 
-userSchema.statics.hashPassword = async ()=>{
+userSchema.statics.hashPassword = async (password)=>{
     return await bcrypt.hash(password,10)
 }
 
